@@ -1,0 +1,61 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('ciclistas', function (Blueprint $table) {
+            $table->id();
+
+            $table->integer('claveId')->unique(); // Define `claveId` como un campo único. Es el id de las excel
+            $table->string('Nombre');                      // Nombre del ciclista
+            $table->string('Apellido');                    // Apellido del ciclista
+            $table->string('Pais');                        // País del ciclista
+            $table->integer('PosIni')->nullable();         // Posición inicial (entero hasta 3 posiciones)
+            $table->integer('PosFin')->nullable();         // Posición final (entero hasta 3 posiciones)
+            $table->integer('Victorias')->nullable();      // Victorias (entero hasta 3 posiciones)
+            $table->decimal('Pts', 5, 8)->nullable();      // Puntos (decimal con 8 decimales)
+            //$table->string('Especialidad')->nullable();    // Especialidad del ciclista
+            $table->enum('Especialidad', ['Escalador', 'Combatividad', 'Sprinter', 'Flandes', 'Ardenas', 'Croner']); // Enum para limitar valores
+            $table->integer('Edad')->nullable();           // Edad del ciclista (entero de 2 posiciones)
+            $table->decimal('LLA', 5, 3)->nullable();      // Valoración LLA (decimal con 3 decimales)
+            $table->decimal('MON', 5, 3)->nullable();      // Valoración MON (decimal con 3 decimales)
+            $table->decimal('COL', 5, 3)->nullable();      // Valoración COL (decimal con 3 decimales)
+            $table->decimal('CRI', 5, 3)->nullable();      // Valoración CRI (decimal con 3 decimales)
+            $table->decimal('PRO', 5, 3)->nullable();      // Valoración PRO (decimal con 3 decimales)
+            $table->decimal('PAV', 5, 3)->nullable();      // Valoración PAV (decimal con 3 decimales)
+            $table->decimal('SPR', 5, 3)->nullable();      // Valoración SPR (decimal con 3 decimales)
+            $table->decimal('ACC', 5, 3)->nullable();      // Valoración ACC (decimal con 3 decimales)
+            $table->decimal('DES', 5, 3)->nullable();      // Valoración DES (decimal con 3 decimales)
+            $table->decimal('COM', 5, 3)->nullable();      // Valoración COM (decimal con 3 decimales)
+            $table->decimal('ENE', 5, 3)->nullable();      // Valoración ENE (decimal con 3 decimales)
+            $table->decimal('RES', 5, 3)->nullable();      // Valoración RES (decimal con 3 decimales)
+            $table->decimal('REC', 5, 3)->nullable();      // Valoración REC (decimal con 3 decimales)
+            $table->decimal('Media', 5, 8)->nullable();    // Media general del ciclista
+
+            // Clave foránea a la tabla de equipos, usando la opción 'set null'
+            $table->unsignedBigInteger('equipo_id')->nullable(); // ID del equipo al que pertenece
+            $table->foreign('equipo_id')->references('id')->on('equipos')->onDelete('set null');
+
+
+            $table->timestamps();                         // Marcas de tiempo para created_at y updated_at
+
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('ciclistas');
+    }
+};
