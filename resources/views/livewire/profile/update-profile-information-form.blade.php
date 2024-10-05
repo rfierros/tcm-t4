@@ -10,6 +10,7 @@ new class extends Component
 {
     public string $name = '';
     public string $email = '';
+    public $teamName; // Equipo asociado al usuario.
 
     /**
      * Mount the component.
@@ -18,6 +19,13 @@ new class extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+
+        $currentTemporada = 4; // Temporada
+        // Encuentra el equipo del usuario en la temporada especificada.
+        $this->teamName = Auth::user()->equipos()
+        ->where('temporada', $currentTemporada)
+        ->first()
+        ?->nombre_equipo ?? 'No team assigned';
     }
 
     /**
@@ -60,10 +68,24 @@ new class extends Component
 
         Session::flash('status', 'verification-link-sent');
     }
+    /*
+
+    */
+
+
+    public function mountTeamName()
+    {
+        // Asume que el usuario tiene una relación con el equipo llamada "team"
+        $this->teamName = Auth::user()->equipo ? Auth::user()->equipo->nombre_equipo : 'No team assigned';
+    }   
 }; ?>
 
 <section>
     <header>
+        <h2 class="text-lg font-bold text-gray-900 mb-8">
+            <span class="text-red-700">{{$teamName}}</span>
+        </h2>
+
         <h2 class="text-lg font-medium text-gray-900">
             {{ __('Profile Information') }}
         </h2>

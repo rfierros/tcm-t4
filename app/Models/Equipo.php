@@ -13,7 +13,7 @@ class Equipo extends Model
 
     protected $fillable = [
         'temporada',
-        'NombreEquipo',
+        'nombre_equipo',
         'user_id', // Clave foránea de la tabla `users`
     ];
 

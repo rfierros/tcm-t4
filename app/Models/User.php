@@ -14,7 +14,7 @@ class User extends Authenticatable
     // Relación con el modelo `Equipo`
     public function equipos()
     {
-        return $this->hasMany(Equipo::class, 'user_id');
+        return $this->hasOne(Equipo::class, 'user_id');
     }
 
     /**
