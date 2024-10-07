@@ -22,4 +22,9 @@ class Equipo extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function ciclistas()
+    {
+        return $this->hasMany(Ciclista::class, 'id');
+    }    
 }
